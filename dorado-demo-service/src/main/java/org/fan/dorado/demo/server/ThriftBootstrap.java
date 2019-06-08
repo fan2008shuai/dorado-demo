@@ -4,16 +4,20 @@ import org.apache.thrift.TProcessor;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.server.TServer;
 import org.apache.thrift.server.TThreadPoolServer;
+import org.apache.thrift.transport.TNonblockingServerSocket;
 import org.apache.thrift.transport.TServerSocket;
+import org.apache.thrift.transport.TServerTransport;
 import org.apache.thrift.transport.TTransportException;
 import org.fan.dorado.demo.api.GreetingService;
 import org.fan.dorado.demo.service.GreetingServiceImpl;
 
 public class ThriftBootstrap {
     public static void main(String[] args) {
+
         try {
 
-            TServerSocket serverTransport = new TServerSocket(9090);
+            TServerTransport serverTransport = new TServerSocket(9090);
+
             TBinaryProtocol.Factory proFactory = new TBinaryProtocol.Factory();
 
             /**
@@ -25,7 +29,7 @@ public class ThriftBootstrap {
             serverArgs.processor(processor);
             serverArgs.protocolFactory(proFactory);
             TServer server = new TThreadPoolServer(serverArgs);
-            System.out.println("Start server on port 9090...");
+            System.out.println("Start server on port 9090....");
 
             server.serve();
         } catch (TTransportException e) {
